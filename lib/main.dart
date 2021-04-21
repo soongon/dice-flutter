@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,7 +21,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int diceNumber = 1;
+  int _firstDiceNumber = 1;
+  int _secondDiceNumber = 3;
+
+  void _rollDice() {
+    setState(() {
+      Random random = Random();
+      _firstDiceNumber = random.nextInt(6) + 1;
+      _secondDiceNumber = random.nextInt(6) + 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +42,16 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () {
-                setState(() {
-                  diceNumber = 3;
-                });
-                print('first dice tabbed.. $diceNumber');
+                _rollDice();
               },
-              child: Image.asset('images/dice$diceNumber.png'),
+              child: Image.asset('images/dice$_firstDiceNumber.png'),
             ),
           )),
           Expanded(
               child: TextButton(
-            child: Image.asset('images/dice5.png'),
+            child: Image.asset('images/dice$_secondDiceNumber.png'),
             onPressed: () {
-              print('second dice tabbed..');
+              _rollDice();
             },
           )),
         ],
